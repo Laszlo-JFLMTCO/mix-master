@@ -1,0 +1,13 @@
+<%= form_for @artist, :html => {:class => "form-horizontal center"} do |f| %>
+  <%= f.label "Name:" %>
+  <%= f.text_field :name %>
+
+  <% f.label "Link to image:" %>
+  <%= f.text_field :image_path %>
+
+  <%= f.submit %>
+
+<% end %>
+
+<%= render partial: "form" %>
+

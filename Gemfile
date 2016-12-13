@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+#Heroku logging in production environment
+gem 'rails_12factor', group: :production
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
@@ -35,10 +37,15 @@ group :development, :test do
   gem 'byebug'
   # Setting up rspec test environment components
   gem 'rspec-rails'
+  # Setting up Capybara for feature testing
+  gem 'capybara'
+  # Setting up save_and_open_page for feature testing
+  gem 'launchy'
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 end
+
 

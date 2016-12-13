@@ -1,0 +1,16 @@
+  <h1>Artists</h1>
+
+  <%= link_to "Add Artist", new_artist_path, class: "btn btn-default" %>
+
+  <table class = "table">
+    <tr>
+      <th>Name</th>
+      <th>Path to image</th>
+    </tr>
+    <% @artists.each do |artist|%>
+      <tr>
+        <td><%= link_to artist.name, artist_path(artist.name) %></td>
+        <td><%= artist.image_path %></td>
+      </tr>
+    <% end  %>
+  </table>
