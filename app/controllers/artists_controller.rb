@@ -7,11 +7,6 @@ class ArtistsController < ApplicationController
     @header[:show_add] = true
   end
 
-  def new
-    @artist = Artist.new
-    @submit_button = "Save Artist"
-  end
-
   def create
     @artist = Artist.create(artist_params)
     if @artist.save
@@ -22,9 +17,22 @@ class ArtistsController < ApplicationController
     end
   end
 
+  def new
+    @artist = Artist.new
+    @submit_button = "Save Artist"
+  end
+
+
   def edit
     @artist = Artist.find_by(name: params[:name])
     @submit_button = "Update Artist Info"
+  end
+
+  def show
+    @artist = Artist.find_by(name: params[:name])
+    @header = Hash.new(true)
+    @header[:title] = "Artist Details"
+    @header[:show_add] = false
   end
 
   def update
@@ -35,13 +43,6 @@ class ArtistsController < ApplicationController
       @errors = @artist.errors.full_messages
       render :edit
     end
-  end
-
-  def show
-    @artist = Artist.find_by(name: params[:name])
-    @header = Hash.new(true)
-    @header[:title] = "Artist Details"
-    @header[:show_add] = false
   end
 
   def destroy

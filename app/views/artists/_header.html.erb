@@ -8,4 +8,7 @@
   <% if @header[:show_delete]%>
     <%= link_to "Delete Artist", artist_path(@artist.name), method: :delete, class: "btn btn-danger" %>
   <% end %>
+  <% if @header[:show_song]%>
+    <%= link_to "Add Song", new_artist_song_path(@artist.name), class: "btn btn-default" %>
+  <% end %>
 </h1>
