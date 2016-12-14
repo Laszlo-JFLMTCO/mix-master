@@ -20,12 +20,13 @@ class ArtistsController < ApplicationController
   def new
     @artist = Artist.new
     @submit_button = "Save Artist"
+    @form_url = artists_path
   end
-
 
   def edit
     @artist = Artist.find_by(name: params[:name])
     @submit_button = "Update Artist Info"
+    @form_url = artist_path(@artist.name)
   end
 
   def show

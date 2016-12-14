@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "User can create an artist" do
+RSpec.feature "User submits a new artist" do
   scenario "Can enter data to create a new artist" do
     artist_name = "Test Artist Name 1"
     artist_image_path = "http://eng.inyarwanda.com/img/images/artist-icon.png"

@@ -6,7 +6,6 @@ RSpec.feature "User can view Artist List" do
 
     visit "/artists"
 
-    # click_on "Trumpet Player"
     click_on "#{artist1.name}"
 
     expect(page).to have_content(artist1.name)
