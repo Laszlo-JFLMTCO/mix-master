@@ -1,0 +1,10 @@
+<% if @errors %>
+  <% @errors.each do |error|%>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <span class="sr-only">Error:</span>
+      <%= error %>
+    </div>
+  <% end %>
+<% end %>
