@@ -29,8 +29,7 @@ class ArtistsController < ApplicationController
 
   def update
     @artist = Artist.find_by(name: params[:name])
-    @artist.update(params[:artist])
-    if @artist.save
+    if @artist.update(artist_params)
       redirect_to artist_path(@artist.name)
     else
       @errors = @artist.errors.full_messages
