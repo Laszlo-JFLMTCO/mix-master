@@ -3,7 +3,8 @@ class SongsController < ApplicationController
   def create
     @artist = Artist.find_by(name: params[:artist_name])
     @song = Song.new(song_params)
-    if @artist.songs << @song.save
+    @song.artist = @artist
+    if @song.save
       redirect_to song_path(@song)
     else
       @errors = @artist.errors.full_messages
@@ -22,6 +23,7 @@ class SongsController < ApplicationController
     @song = Song.find(params[:id])
     @header = Hash.new(false)
     @header[:title] = "Song Details"
+    @header[:show_index] = true
   end
 
   private

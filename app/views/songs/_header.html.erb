@@ -9,3 +9,7 @@
     <%= link_to "Delete Song", artist_path(@artist.name), method: :delete, class: "btn btn-danger" %>
   <% end %>
 </h1>
+
+<% if @header[:show_index]%>
+  <p><%= link_to "Artist Details", artist_path(@song.artist.name), class: "btn btn-primary btn-xs" %></p>
+<% end %>

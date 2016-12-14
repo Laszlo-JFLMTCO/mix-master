@@ -13,6 +13,8 @@ class ArtistsController < ApplicationController
       redirect_to artist_path(@artist.name)
     else
       @errors = @artist.errors.full_messages
+      @submit_button = "Save Artist"
+      @form_url = artists_path
       render :new
     end
   end
@@ -27,6 +29,8 @@ class ArtistsController < ApplicationController
     @artist = Artist.find_by(name: params[:name])
     @submit_button = "Update Artist Info"
     @form_url = artist_path(@artist.name)
+    @header = Hash.new(false)
+    @header[:title] = "Edit Artist Details"
   end
 
   def show
@@ -42,6 +46,10 @@ class ArtistsController < ApplicationController
       redirect_to artist_path(@artist.name)
     else
       @errors = @artist.errors.full_messages
+      @submit_button = "Update Artist Info"
+      @form_url = artist_path(@artist.name)
+      @header = Hash.new(false)
+      @header[:title] = "Edit Artist Details"
       render :edit
     end
   end

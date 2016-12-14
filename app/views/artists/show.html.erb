@@ -1,9 +1,18 @@
 <%= render partial: "header" %>
 
-<% if @header[:show_index]%>
-  <p><%= link_to "Back to Artist List", artists_path, class: "btn btn-primary btn-xs" %></p>
-<% end %>
-
 <h3><span class="label label-default"><%= @artist.name %></span></h3>
 
 <img class = "img-rounded" src = "<%= @artist.image_path %>">
+
+<h3>List of Songs</h3>
+
+<table class = "table">
+  <tr>
+    <th>Title</th>
+  </tr>
+  <% @artist.songs.each do |song|%>
+    <tr>
+      <td><%= link_to song.title, song_path(song) %></td>
+    </tr>
+  <% end  %>
+</table>

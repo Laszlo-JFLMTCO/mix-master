@@ -12,3 +12,7 @@
     <%= link_to "Add Song", new_artist_song_path(@artist.name), class: "btn btn-default" %>
   <% end %>
 </h1>
+
+<% if @header[:show_index]%>
+  <p><%= link_to "Back to Artist List", artists_path, class: "btn btn-primary btn-xs" %></p>
+<% end %>
