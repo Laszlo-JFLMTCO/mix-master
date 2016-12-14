@@ -1,0 +1,34 @@
+<%= form_for @playlist, :html => {:class => "form-horizontal"} do |f| %>
+  <div class = "form-group">
+    <div class = "col-sm-9">
+      <%= f.text_field :title, :class => "form-control", :placeholder => "Add Playlist Title here..." %>
+    </div>
+    <div class = "col-sm-3">
+      <%= f.submit @submit_button, :class => "btn btn-default" %>
+    </div>
+  </div>
+
+  <div class = "form-group">
+  </div>
+
+  <h3>List of Songs</h3>
+
+  <table class = "table">
+    <tr>
+      <th>Title</th>
+    </tr>
+    <% @songs.each do |song|%>
+      <tr>
+<td>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name = "songlist[<%= song.id %>]"> <%= song.title %>
+    </label>
+  </div>
+
+</td>
+      </tr>
+    <% end  %>
+  </table>
+
+<% end %>

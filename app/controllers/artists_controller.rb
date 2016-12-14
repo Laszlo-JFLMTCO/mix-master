@@ -15,6 +15,8 @@ class ArtistsController < ApplicationController
       @errors = @artist.errors.full_messages
       @submit_button = "Save Artist"
       @form_url = artists_path
+      @header = Hash.new(false)
+      @header[:title] = "Enter new Artist"
       render :new
     end
   end
@@ -23,6 +25,8 @@ class ArtistsController < ApplicationController
     @artist = Artist.new
     @submit_button = "Save Artist"
     @form_url = artists_path
+    @header = Hash.new(false)
+    @header[:title] = "Enter new Artist"
   end
 
   def edit
