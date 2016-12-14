@@ -1,0 +1,18 @@
+<%= render partial: "header" %>
+  <table class = "table">
+    <tr>
+      <th>Title</th>
+      <th class = "text-center" colspan = "2">Action</th>
+    </tr>
+    <% @playlists.each do |playlist|%>
+      <tr>
+        <td><%= link_to playlist.title, playlist_path(playlist) %>
+          <span class="badge">
+            <%= playlist.songs.count %>
+          </span>
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+    <% end  %>
+  </table>

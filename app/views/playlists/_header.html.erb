@@ -1,0 +1,15 @@
+<h1><%= @header[:title] %>
+  <% if @header[:show_add]%>
+    <%= link_to "Add Playlist", new_artist_path, class: "btn btn-default" %>
+  <% end %>
+  <% if @header[:show_edit]%>
+    <%= link_to "Edit Playlist", edit_artist_path(@artist.name), class: "btn btn-warning" %>
+  <% end %>
+  <% if @header[:show_delete]%>
+    <%= link_to "Delete Playlist", artist_path(@artist.name), method: :delete, class: "btn btn-danger" %>
+  <% end %>
+</h1>
+
+<% if @header[:show_index]%>
+  <p><%= link_to "Collection of Playlists", playlists_path, class: "btn btn-primary btn-xs" %></p>
+<% end %>

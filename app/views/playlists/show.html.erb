@@ -1,0 +1,16 @@
+<%= render partial: "header" %>
+
+<h3><span class="label label-default"><%= @playlist.title %></span></h3>
+
+<h3>List of Songs</h3>
+
+<table class = "table">
+  <tr>
+    <th>Title</th>
+  </tr>
+  <% @playlist.songs.each do |song|%>
+    <tr>
+      <td><%= link_to song.title, song_path(song) %></td>
+    </tr>
+  <% end  %>
+</table>
