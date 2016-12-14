@@ -19,14 +19,13 @@
     </tr>
     <% @songs.each do |song|%>
       <tr>
-<td>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox" name = "songlist[<%= song.id %>]"> <%= song.title %>
-    </label>
-  </div>
-
-</td>
+        <td>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" <%= @playlist_song_list[song.id] %> name = "songlist[<%= song.id.to_i %>]"> <%= song.title %>
+            </label>
+          </div>
+        </td>
       </tr>
     <% end  %>
   </table>

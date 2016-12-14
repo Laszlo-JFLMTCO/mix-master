@@ -11,7 +11,7 @@
             <%= playlist.songs.count %>
           </span>
         </td>
-        <td></td>
+        <td class = "text-center"><%= link_to "Edit", edit_playlist_path(playlist), class: "btn btn-warning" %></td>
         <td></td>
       </tr>
     <% end  %>
