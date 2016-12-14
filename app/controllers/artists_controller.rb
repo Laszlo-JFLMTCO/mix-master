@@ -2,10 +2,14 @@ class ArtistsController < ApplicationController
 
   def index
     @artists = Artist.all
+    @header = Hash.new(false)
+    @header[:title] = "Artist List"
+    @header[:show_add] = true
   end
 
   def new
     @artist = Artist.new
+    @submit_button = "Save Artist"
   end
 
   def create
@@ -20,6 +24,7 @@ class ArtistsController < ApplicationController
 
   def edit
     @artist = Artist.find_by(name: params[:name])
+    @submit_button = "Update Artist Info"
   end
 
   def update
@@ -35,6 +40,9 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = Artist.find_by(name: params[:name])
+    @header = Hash.new(true)
+    @header[:title] = "Artist Details"
+    @header[:show_add] = false
   end
 
   def destroy
