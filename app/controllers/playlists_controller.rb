@@ -9,25 +9,16 @@ class PlaylistsController < ApplicationController
 
   def edit
     @playlist = Playlist.find(params[:id])
-    @header = Hash.new(false)
-    @header[:title] = "Edit Playlist"
     @submit_button = "Update Playlist"
     @form_url = playlist_path(@playlist)
+    @header = header(:edit)
     @songs = Song.all
-    @song_ids = Song.all.pluck(:id)
-    @playlist_song_ids = @playlist.songs.ids
-    @playlist_song_list = Hash.new("")
-    @song_ids.each do |song_id|
-      @playlist_song_list[song_id] = "checked" if @playlist_song_ids.include?(song_id)
-    end
+    @playlist_song_list = song_list_checkboxes(@playlist.songs.ids)
   end
 
   def show
     @playlist = Playlist.find(params[:id])
-    @header = Hash.new(false)
-    @header[:title] = "Playlist Details"
-    @header[:show_index] = true
-    @header[:show_edit] = true
+    @header = header(:show)
   end
 
   def create
@@ -101,6 +92,20 @@ class PlaylistsController < ApplicationController
     Hash.new(default)
   end
 
+  def header_show
+    header = hash_init(false)
+    header[:title] = "Playlist Details"
+    header[:show_index] = true
+    header[:show_edit] = true
+    return header
+  end
+
+  def header_edit
+    header = hash_init(false)
+    header[:title] = "Edit Playlist"
+    return header
+  end
+
   def header_new
     header = hash_init(false)
     header[:title] = "Creating Playlist"
@@ -108,6 +113,8 @@ class PlaylistsController < ApplicationController
   end
 
   def header(route)
+    return header_show if route == :show
+    return header_edit if route == :edit
     return header_new if route == :new
   end
 
