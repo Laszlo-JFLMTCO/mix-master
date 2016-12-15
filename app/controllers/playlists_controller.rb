@@ -15,7 +15,7 @@ class PlaylistsController < ApplicationController
     @form_url = playlist_path(@playlist)
     @songs = Song.all
     @song_ids = Song.all.pluck(:id)
-    @playlist_song_ids = @playlist.songs.pluck(:id)
+    @playlist_song_ids = @playlist.songs.ids
     @playlist_song_list = Hash.new("")
     @song_ids.each do |song_id|
       @playlist_song_list[song_id] = "checked" if @playlist_song_ids.include?(song_id)
@@ -52,12 +52,12 @@ class PlaylistsController < ApplicationController
     @playlist = Playlist.find(params[:id])
     @playlist.update(playlist_params)
     if @playlist.save
-      old_song_list = @playlist.songs.pluck(:id)
-      updated_song_list = []
-      updated_song_list = params[:songlist].keys unless params[:songlist].nil?
-      updated_song_list.map! {|id| id.to_i}
-      add_songs = updated_song_list - old_song_list
-      remove_songs = old_song_list - updated_song_list
+      old_song_list = @playlist.songs.ids
+      new_song_list = []
+      new_song_list = params[:songlist].keys unless params[:songlist].nil?
+      new_song_list.map! {|id| id.to_i}
+      add_songs = new_song_list - old_song_list
+      remove_songs = old_song_list - new_song_list
       add_songs.each do |song_id|
         @playlist.songs << Song.find(song_id)
       end
@@ -76,16 +76,10 @@ class PlaylistsController < ApplicationController
   def new
     @submit_button = "Save Playlist"
     @form_url = playlists_path
-    @header = Hash.new(false)
-    @header[:title] = "Creating Playlist"
+    @header = header(:new)
     @songs = Song.all
-    @song_ids = Song.all.pluck(:id)
     @playlist = Playlist.new
-    @playlist_song_ids = []
-    @playlist_song_list = Hash.new("")
-    @song_ids.each do |song_id|
-      @playlist_song_list[song_id] = "checked" if @playlist_song_ids.include?(song_id)
-    end
+    @playlist_song_list = song_list_checkboxes([])
   end
 
   private
@@ -93,5 +87,29 @@ class PlaylistsController < ApplicationController
   def playlist_params
     params.require(:playlist).permit(:title)
   end
+
+  def song_list_checkboxes(playlist_song_ids)
+    playlist_song_list = hash_init("")
+    song_ids = Song.all.pluck(:id)
+    song_ids.each do |song_id|
+      playlist_song_list[song_id] = "checked" if playlist_song_ids.include?(song_id)
+    end
+    return playlist_song_list
+  end
+
+  def hash_init(default)
+    Hash.new(default)
+  end
+
+  def header_new
+    header = hash_init(false)
+    header[:title] = "Creating Playlist"
+    return header
+  end
+
+  def header(route)
+    return header_new if route == :new
+  end
+
 
 end

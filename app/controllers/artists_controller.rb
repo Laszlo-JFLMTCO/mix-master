@@ -39,6 +39,7 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = Artist.find_by(name: params[:name])
+    @artist_songs = @artist.songs
     @header = Hash.new(true)
     @header[:title] = "Artist Details"
     @header[:show_add] = false

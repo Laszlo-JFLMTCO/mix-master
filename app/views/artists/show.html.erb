@@ -10,7 +10,7 @@
   <tr>
     <th>Title</th>
   </tr>
-  <% @artist.songs.each do |song|%>
+  <% @artist_songs.each do |song|%>
     <tr>
       <td><%= link_to song.title, song_path(song) %></td>
     </tr>
