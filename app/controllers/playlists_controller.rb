@@ -24,17 +24,15 @@ class PlaylistsController < ApplicationController
   def create
     @playlist = Playlist.new(playlist_params)
     if @playlist.save
-      updated_song_list = []
-      updated_song_list = params[:songlist].keys unless params[:songlist].nil?
-
-      updated_song_list.each do |song_id|
-        @playlist.songs << Song.find(song_id)
-      end
+      new_songs = []
+      new_songs = params[:songlist].keys unless params[:songlist].nil?
+      update_playlist_songs(@playlist, new_songs, [])
       redirect_to playlists_path
     else
       @errors = @playlist.errors.full_messages
       @submit_button = "Save Playlist"
       @form_url = playlists_path
+      @header = header(:new)
       render :new
     end
   end
@@ -43,23 +41,16 @@ class PlaylistsController < ApplicationController
     @playlist = Playlist.find(params[:id])
     @playlist.update(playlist_params)
     if @playlist.save
-      old_song_list = @playlist.songs.ids
-      new_song_list = []
-      new_song_list = params[:songlist].keys unless params[:songlist].nil?
-      new_song_list.map! {|id| id.to_i}
-      add_songs = new_song_list - old_song_list
-      remove_songs = old_song_list - new_song_list
-      add_songs.each do |song_id|
-        @playlist.songs << Song.find(song_id)
-      end
-      remove_songs.each do |song_id|
-        @playlist.songs.delete(Song.find(song_id))
-      end
+      old_songs = @playlist.songs.ids
+      new_songs = []
+      new_songs = elements_to_num(params[:songlist].keys) unless params[:songlist].nil?
+      update_playlist_songs(@playlist, new_songs, old_songs)
       redirect_to playlists_path
     else
       @errors = @playlist.errors.full_messages
       @submit_button = "Save Playlist"
       @form_url = playlists_path
+      @hader = header(:new)
       render :new
     end
   end
@@ -77,6 +68,23 @@ class PlaylistsController < ApplicationController
 
   def playlist_params
     params.require(:playlist).permit(:title)
+  end
+
+  def remove_songs(playlist, songs)
+    songs.each do |song_id|
+      playlist.songs.delete(Song.find(song_id))
+    end
+  end
+
+  def add_songs(playlist, songs)
+    songs.each do |song_id|
+      playlist.songs << Song.find(song_id)
+    end
+  end
+
+  def update_playlist_songs(playlist, new_songs, old_songs)
+      add_songs(playlist, new_songs - old_songs)
+      remove_songs(playlist, old_songs - new_songs)
   end
 
   def song_list_checkboxes(playlist_song_ids)
@@ -118,5 +126,7 @@ class PlaylistsController < ApplicationController
     return header_new if route == :new
   end
 
-
+  def elements_to_num(list)
+    list.map! {|element| element.to_i}
+  end
 end
