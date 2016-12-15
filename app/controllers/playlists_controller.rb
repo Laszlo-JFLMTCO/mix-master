@@ -26,13 +26,17 @@ class PlaylistsController < ApplicationController
     @playlist = Playlist.find(params[:id])
     @header = Hash.new(false)
     @header[:title] = "Playlist Details"
-    @header[:show_index] = true    
+    @header[:show_index] = true
+    @header[:show_edit] = true
   end
 
   def create
     @playlist = Playlist.new(playlist_params)
     if @playlist.save
-      params[:songlist].keys.each do |song_id|
+      updated_song_list = []
+      updated_song_list = params[:songlist].keys unless params[:songlist].nil?
+
+      updated_song_list.each do |song_id|
         @playlist.songs << Song.find(song_id)
       end
       redirect_to playlists_path
@@ -49,7 +53,8 @@ class PlaylistsController < ApplicationController
     @playlist.update(playlist_params)
     if @playlist.save
       old_song_list = @playlist.songs.pluck(:id)
-      updated_song_list = params[:songlist].keys
+      updated_song_list = []
+      updated_song_list = params[:songlist].keys unless params[:songlist].nil?
       updated_song_list.map! {|id| id.to_i}
       add_songs = updated_song_list - old_song_list
       remove_songs = old_song_list - updated_song_list
