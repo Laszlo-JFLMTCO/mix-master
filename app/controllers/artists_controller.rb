@@ -52,7 +52,6 @@ class ArtistsController < ApplicationController
       @errors = @artist.errors.full_messages
       @submit_button = "Update Artist Info"
       @form_url = artist_path(Artist.find_by(name: params[:name]).name)
-      # @artist = Artist.find_by(name: params[:name])
       @header = Hash.new(false)
       @header[:title] = "Edit Artist Details"
       render :edit
